@@ -29,8 +29,8 @@ global.linkz = "-" //your theme url which will be displayed on whatsapp
 global.websitex = "https://youtu.be/WiIqCdiDjFo" //ur website to be displayed
 global.botscript = 'https://github.com/DGXeon/CheemsBot-MD6' //script link
 global.themeemoji = "🤓" //ur theme emoji
-global.packname = "Stiker" //ur sticker watermark packname
-global.author = "Stiker Wangsaff" //ur sticker watermark author
+global.packname = "" //ur sticker watermark packname
+global.author = "CheemsBot-MD6" //ur sticker watermark author
 global.wm = "©Rasya" //ur watermark
 
 // Other
