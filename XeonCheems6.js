@@ -3697,7 +3697,7 @@ case 'keluar': case 'leave': {
                 neww = performance.now()
                 oldd = performance.now()
                 
-                let _uptime = process.uptime() * 1000
+                let uptime = process.uptime() * 1000
          let anu = `
 Bot Online!
 Runtime: ${uptime}
