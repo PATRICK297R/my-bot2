@@ -3698,19 +3698,6 @@ case 'keluar': case 'leave': {
                 oldd = performance.now()
                 
                 let _uptime = process.uptime() * 1000
-let uptime = clockString(_uptime)
-let moment = require('moment-timezone');
-
-let now = moment.tz('Asia/Jakarta');
-let idulFitri = moment.tz('April 21, 2023 23:59:59', 'Asia/Jakarta');
-
-let diff = idulFitri.diff(now);
-let duration = moment.duration(diff);
-
-let days = duration.days();
-let hours = duration.hours();
-let minutes = duration.minutes();
-let seconds = duration.seconds();
          let anu = `
 Bot Online!
 Runtime: ${uptime}
