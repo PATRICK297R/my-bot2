@@ -950,7 +950,7 @@ let documents = [doc1,doc2,doc3,doc4,doc5,doc6]
 let docs = pickRandom(documents)
 
 //swtich case
-       if (isCmd) {
+          if(isCmd) {
         switch(command) {
 	case 'afk': {
                 let user = global.db.data.users[m.sender]
@@ -9794,7 +9794,6 @@ break
 		}
         }       
         }
- 
 
     } catch (err) {
         m.reply(util.format(err))
