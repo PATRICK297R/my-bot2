@@ -1926,7 +1926,6 @@ if (!text) return m.reply(`Example : ${prefix + command} Stay jb`)
                 if (!text) throw `Example : ${prefix + command} anime whatsapp status`
                 m.reply(mess.wait)
                 const yts = require("youtube-yts")
-                let
                 let search = await yts(text)
                 let anulay = search.videos[Math.floor(Math.random() * search.videos.length)]
                 let caption = `
