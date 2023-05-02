@@ -1108,19 +1108,7 @@ delete tebaklagu[m.sender.split('@')[0]]
 }
 break
             case 'matchquiz': case 'math': {
-                if (kuismath.hasOwnProperty(m.sender.split('@')[0])) throw "There are still unfinished sessions!"
-                let { genMath, modes } = require('./src/math')
-                if (!text) throw `Mode: ${Object.keys(modes).join(' | ')}\nUsage example: ${prefix}math medium`
-                let result = await genMath(text.toLowerCase())
-                XeonBotInc.sendText(m.chat, `*What is the result of: ${result.soal.toLowerCase()}*?\n\nTime: ${(result.waktu / 1000).toFixed(2)} second`, m).then(() => {
-                    kuismath[m.sender.split('@')[0]] = result.jawaban.toLowerCase()
-                })
-                await sleep(result.waktu)
-                if (kuismath.hasOwnProperty(m.sender.split('@')[0])) {
-                    console.log("Answer: " + result.jawaban)
-                    m.reply("Time has run out\nAnswer: " + kuismath[m.sender.split('@')[0]])
-                    delete kuismath[m.sender.split('@')[0]]
-                }
+m.reply('Sorry, this feature has been deleted :)')
             }
             break
   case 'slot': {
@@ -1936,16 +1924,11 @@ if (!text) return m.reply(`Example : ${prefix + command} Stay jb`)
         
     case 'play': case 'ytplay':{
                 if (!text) throw `Example : ${prefix + command} anime whatsapp status`
+                m.reply(wait)
                 let yts = require("youtube-yts")
                 let search = await yts(text)
                 let anulay = search.videos[Math.floor(Math.random() * search.videos.length)]
-                let buttons = [
-                    {buttonId: `playmp3 ${anulay.url}`, buttonText: {displayText: '♫ Audio'}, type: 1},
-                    {buttonId: `playmp4 ${anulay.url}`, buttonText: {displayText: '► Video'}, type: 1}
-                ]
-                let buttonMessage = {
-                    image: { url: anulay.thumbnail },
-                    caption: `
+                let caption = `
 ${themeemoji} Title : ${anulay.title}
 ${themeemoji} Ext : Search
 ${themeemoji} ID : ${anulay.videoId}
@@ -1955,12 +1938,9 @@ ${themeemoji} Upload At : ${anulay.ago}
 ${themeemoji} Author : ${anulay.author.name}
 ${themeemoji} Channel : ${anulay.author.url}
 ${themeemoji} Description : ${anulay.description}
-${themeemoji} Url : ${anulay.url}`,
-                    footer: botname,
-                    buttons: buttons,
-                    headerType: 4
-                }
-                XeonBotInc.sendMessage(m.chat, buttonMessage, { quoted: m })
+${themeemoji} Url : ${anulay.url}
+`.trim()
+                XeonBotInc.sendMessage(m.chat, { image: { url: anulay.thumbnail } caption: caption }, { quoted: m })
             }
             break
 case 'playmp3': //credit: Ray Senpai ❤️ https://github.com/EternityBots/Nezuko
@@ -2011,12 +1991,13 @@ await XeonBotInc.sendMessage(m.chat,{
 },{quoted:m})
 break
 case 'ytmp3': case 'ytaudio': //credit: Ray Senpai ❤️ https://github.com/EternityBots/Nezuko
+m.reply(mess.wait)
 const xeonaudp3 = require('./lib/ytdl2')
 if (args.length < 1 || !isUrl(text) || !xeonaudp3.isYTUrl(text)) throw `Where's the yt link?\nExample: ${prefix + command} https://youtube.com/shorts/YQf-vMjDuKY?feature=share`
 const audio=await xeonaudp3.mp3(text)
 await XeonBotInc.sendMessage(m.chat,{
     audio: fs.readFileSync(audio.path),
-    mimetype: 'audio/mp4', ptt: true,
+    mimetype: 'audio/mp4',
     contextInfo:{
         externalAdReply:{
             title:audio.meta.title,
@@ -2041,6 +2022,7 @@ break
             }
             break
 case 'ytmp4': case 'ytvideo': //credit: Ray Senpai ❤️ https://github.com/EternityBots/Nezuko
+m.reply(mess.wait)
 const xeonvidoh = require('./lib/ytdl2')
 if (args.length < 1 || !isUrl(text) || !xeonvidoh.isYTUrl(text)) throw `Where is the link??\n\nExample : ${prefix + command} https://youtube.com/watch?v=PtFMh6Tccag%27 128kbps`
 const vid=await xeonvidoh.mp4(text)
@@ -3547,7 +3529,7 @@ case 'anonymous': {
                 if (m.isGroup) return m.reply(mess.group)
 				this.anonymous = this.anonymous ? this.anonymous : {}
 				let buttons = [
-                    { buttonId: 'start', buttonText: { displayText: 'Start' }, type: 1 }
+                    { buttonId: '.start', buttonText: { displayText: 'Start' }, type: 1 }
                 ]
                 XeonBotInc.sendButtonText(m.chat, buttons, `\`\`\`Hi ${await XeonBotInc.getName(m.sender)} Welcome To Anonymous Chat\n\nClick the button below to find a partner\`\`\``, botname, m)
             }
@@ -3558,7 +3540,7 @@ case 'keluar': case 'leave': {
                 let room = Object.values(this.anonymous).find(room => room.check(m.sender))
                 if (!room) {
                     let buttons = [
-                        { buttonId: 'start', buttonText: { displayText: 'Start' }, type: 1 }
+                        { buttonId: .'start', buttonText: { displayText: 'Start' }, type: 1 }
                     ]
                     await XeonBotInc.sendButtonText(m.chat, buttons, `\`\`\`You Are Not In Anonymous Session, Press Button To Find Partner \`\`\``)
                     throw false
@@ -3574,7 +3556,7 @@ case 'keluar': case 'leave': {
                 this.anonymous = this.anonymous ? this.anonymous : {}
                 if (Object.values(this.anonymous).find(room => room.check(m.sender))) {
                     let buttons = [
-                        { buttonId: 'keluar', buttonText: { displayText: 'Stop' }, type: 1 }
+                        { buttonId: '.keluar', buttonText: { displayText: 'Stop' }, type: 1 }
                     ]
                     await XeonBotInc.sendButtonText(m.chat, buttons, `\`\`\`You are still in an anonymous session, press the button below to terminate your anonymous session\`\`\``, botname, m)
                     throw false
@@ -3582,8 +3564,8 @@ case 'keluar': case 'leave': {
                 let room = Object.values(this.anonymous).find(room => room.state === 'WAITING' && !room.check(m.sender))
                 if (room) {
                     let buttons = [
-                        { buttonId: 'next', buttonText: { displayText: 'Skip' }, type: 1 },
-                        { buttonId: 'keluar', buttonText: { displayText: 'Stop' }, type: 1 }
+                        { buttonId: '.next', buttonText: { displayText: 'Skip' }, type: 1 },
+                        { buttonId: '.keluar', buttonText: { displayText: 'Stop' }, type: 1 }
                     ]
                     await XeonBotInc.sendButtonText(room.a, buttons, `\`\`\`Successfully Found Partner, now you can send messages\`\`\``, botname, m)
                     room.b = m.sender
@@ -3616,7 +3598,7 @@ case 'keluar': case 'leave': {
                 let romeo = Object.values(this.anonymous).find(room => room.check(m.sender))
                 if (!romeo) {
                     let buttons = [
-                        { buttonId: 'start', buttonText: { displayText: 'Start' }, type: 1 }
+                        { buttonId: '.start', buttonText: { displayText: 'Start' }, type: 1 }
                     ]
                     await XeonBotInc.sendButtonText(m.chat, buttons, `\`\`\`You are not in an anonymous session, press the button to find a partner\`\`\``)
                     throw false
@@ -3627,8 +3609,8 @@ case 'keluar': case 'leave': {
                 let room = Object.values(this.anonymous).find(room => room.state === 'WAITING' && !room.check(m.sender))
                 if (room) {
                     let buttons = [
-                        { buttonId: 'next', buttonText: { displayText: 'Skip' }, type: 1 },
-                        { buttonId: 'keluar', buttonText: { displayText: 'Stop' }, type: 1 }
+                        { buttonId: '.next', buttonText: { displayText: 'Skip' }, type: 1 },
+                        { buttonId: '.keluar', buttonText: { displayText: 'Stop' }, type: 1 }
                     ]
                     await XeonBotInc.sendButtonText(room.a, buttons, `\`\`\`Successfully Found Partner, now you can send message\`\`\``, botname, m)
                     room.b = m.sender
@@ -3649,7 +3631,7 @@ case 'keluar': case 'leave': {
                         },
                     }
                     let buttons = [
-                        { buttonId: 'keluar', buttonText: { displayText: 'Stop' }, type: 1 }
+                        { buttonId: '.keluar', buttonText: { displayText: 'Stop' }, type: 1 }
                     ]
                     await XeonBotInc.sendButtonText(m.chat, buttons, `\`\`\`Please wait, looking for a partner\`\`\``, botname, m)
                 }
@@ -3704,10 +3686,6 @@ let uptime = clockString(_uptime)
 Bot Online!
 Runtime: ${uptime}
 Speed: ${latensi.toFixed(4)} Detik
-
-_Taqabbalallahu minna wa minkum_
-*Selamat Hari Raya Idul Fitri  1444 H*
-Mohon maaf lahir & bathin atas segala salah dan khilaf para atmin
          `.trim()
          m.reply(anu)
          
@@ -7291,7 +7269,7 @@ let result = fs.readFileSync('./XeonMedia/theme/Cheems-bot.mp4')
 │𝗣𝗼𝘄𝗲𝗿𝗲𝗱 : @${ini_mark.split('@')[0]}
 │𝗕𝗼𝘁 : ${global.botname}
 │𝗢𝘄𝗻𝗲𝗿 : @${ownernya.split('@')[0]}
-│𝗣𝗿𝗲𝗳𝗶𝘅 :  NO-PREFIX 
+│𝗣𝗿𝗲𝗳𝗶𝘅 :  .
 │𝗠𝗼𝗱𝗲 : ${XeonBotInc.public ? 'Public' : `Self`}
 │𝗛𝗼𝘀𝘁 𝗡𝗮𝗺𝗲 : ${os.hostname()}
 │𝗣𝗹𝗮𝘁𝗳𝗼𝗿𝗺 : ${os.platform()}
