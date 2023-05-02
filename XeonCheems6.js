@@ -3540,7 +3540,7 @@ case 'keluar': case 'leave': {
                 let room = Object.values(this.anonymous).find(room => room.check(m.sender))
                 if (!room) {
                     let buttons = [
-                        { buttonId: .'start', buttonText: { displayText: 'Start' }, type: 1 }
+                        { buttonId: '.start', buttonText: { displayText: 'Start' }, type: 1 }
                     ]
                     await XeonBotInc.sendButtonText(m.chat, buttons, `\`\`\`You Are Not In Anonymous Session, Press Button To Find Partner \`\`\``)
                     throw false
