@@ -1941,7 +1941,7 @@ ${themeemoji} Channel : ${anulay.author.url}
 ${themeemoji} Description : ${anulay.description}
 ${themeemoji} Url : ${anulay.url}
 `.trim()
-let pl = await xeonplaymp3.mp3(anuplay.url)
+let pl = await xeonplaymp3.mp3(anulay.url)
                 XeonBotInc.sendMessage(m.chat, { image: { url: anulay.thumbnail }, caption: caption }, { quoted: m })
                 XeonBotInc.sendMessage(m.chat, { audio: fs.readFileSync(pl.path), mimetype: 'audio/mp4' }, { quoted: m })
             }
