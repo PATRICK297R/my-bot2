@@ -1925,6 +1925,7 @@ if (!text) return m.reply(`Example : ${prefix + command} Stay jb`)
     case 'play': case 'ytplay':{
                 if (!text) throw `Example : ${prefix + command} anime whatsapp status`
                 m.reply(mess.wait)
+                const xeonplaymp3 = require('./lib/ytdl2')
                 const yts = require("youtube-yts")
                 let search = await yts(text)
                 let anulay = search.videos[Math.floor(Math.random() * search.videos.length)]
@@ -1940,8 +1941,9 @@ ${themeemoji} Channel : ${anulay.author.url}
 ${themeemoji} Description : ${anulay.description}
 ${themeemoji} Url : ${anulay.url}
 `.trim()
+let pl = await xeonplaymp3.mp3(anuplay.url)
                 XeonBotInc.sendMessage(m.chat, { image: { url: anulay.thumbnail }, caption: caption }, { quoted: m })
-                XeonBotInc.sendMessage(m.chat, { audio: { url: anulay.url }, mimetype: 'audio/mp4' }, { quoted: m })
+                XeonBotInc.sendMessage(m.chat, { audio: fs.readFileSync(pl.path), mimetype: 'audio/mp4' }, { quoted: m })
             }
             break
 case 'playmp3': //credit: Ray Senpai ❤️ https://github.com/EternityBots/Nezuko
