@@ -1940,7 +1940,7 @@ ${themeemoji} Channel : ${anulay.author.url}
 ${themeemoji} Description : ${anulay.description}
 ${themeemoji} Url : ${anulay.url}
 `.trim()
-                XeonBotInc.sendMessage(m.chat, { image: { url: anulay.thumbnail } caption: caption }, { quoted: m })
+                XeonBotInc.sendMessage(m.chat, { image: { url: anulay.thumbnail }, teks: caption }, { quoted: m })
             }
             break
 case 'playmp3': //credit: Ray Senpai ❤️ https://github.com/EternityBots/Nezuko
