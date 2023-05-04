@@ -726,7 +726,13 @@ XeonBotInc.sendMessage(from, {text:`\`\`\`「 Link Detected 」\`\`\`\n\n@${m.se
       if (db.data.chats[m.chat].mute && !isAdmins && !isCreator) {
       return
       }
-
+//salam
+if (/(ass?alam|اَلسَّلاَمُ عَلَيْكُمْ|السلام عليکم)/i.test(budy)) {
+  return m.reply(`
+  وَعَلَيْكُمْ السَّلاَمُ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ
+_wa'alaikumussalam wr.wb._
+`);
+}
 //emoji 
 const emote = (satu, dua) => {
 try{	    
@@ -850,9 +856,9 @@ Type *surrender* to surrender and admit defeat`
 	    if (roof) {
 	    let win = ''
 	    let tie = false
-	    if (m.sender == roof.p2 && /^(acc(ept)?|accept|yes|okay?|reject|no|later|nop(e.)?yes|y)/i.test(m.text) && m.isGroup && roof.status == 'wait') {
-	    if (/^(reject|no|later|n|nop(e.)?yes)/i.test(m.text)) {
-	    XeonBotInc.sendTextWithMentions(m.chat, `@${roof.p2.split`@`[0]} rejected the suit, the suit is canceled`, m)
+	    if (m.sender == roof.p2 && /^(acc(ept)?|terima|gas|oke?|tolak|gamau|nanti|ga(k.)?bisa)/i.test(m.text) && m.isGroup && roof.status == 'wait') {
+	    if (/^(tolak|gamau|nanti|ga(k.)?bisa)/i.test(m.text)) {
+	    XeonBotInc.sendTextWithMentions(m.chat, `@${roof.p2.split`@`[0]} menolak, suit dibatalkan`, m)
 	    delete this.suit[roof.id]
 	    return !0
 	    }
@@ -860,20 +866,20 @@ Type *surrender* to surrender and admit defeat`
 	    roof.asal = m.chat
 	    clearTimeout(roof.waktu)
 	    //delete roof[roof.id].waktu
-	    XeonBotInc.sendText(m.chat, `Suit has been sent to chat
+	    XeonBotInc.sendText(m.chat, `suit telah dikirim ke chat
 
 @${roof.p.split`@`[0]} and 
 @${roof.p2.split`@`[0]}
 
-Please choose a suit in the respective chat"
-click https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] })
-	    if (!roof.pilih) XeonBotInc.sendText(roof.p, `Please Select \n\Rock🗿\nPaper📄\nScissors✂️`, m)
-	    if (!roof.pilih2) XeonBotInc.sendText(roof.p2, `Please Select \n\nRock🗿\nPaper📄\nScissors✂️`, m)
+Silahkan pilih suit di chat masing-masing"
+klik https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] })
+	    if (!roof.pilih) XeonBotInc.sendText(roof.p, `Silahkan Pilih! \n\nBatu🗿\nKertas📄\nGunting✂️`, m)
+	    if (!roof.pilih2) XeonBotInc.sendText(roof.p2, `Silahkan Pilih! \n\nBatu🗿\nKertas📄\nGunting✂️`, m)
 	    roof.waktu_milih = setTimeout(() => {
-	    if (!roof.pilih && !roof.pilih2) XeonBotInc.sendText(m.chat, `Both Players Don't Want To Play,\nSuit Canceled`)
+	    if (!roof.pilih && !roof.pilih2) XeonBotInc.sendText(m.chat, `Kedua Pemain Tidak Ingin Bermain,\nSuit dibatalkan`)
 	    else if (!roof.pilih || !roof.pilih2) {
 	    win = !roof.pilih ? roof.p2 : roof.p
-	    XeonBotInc.sendTextWithMentions(m.chat, `@${(roof.pilih ? roof.p2 : roof.p).split`@`[0]} Didn't Choose Suit, Game Over!`, m)
+	    XeonBotInc.sendTextWithMentions(m.chat, `@${(roof.pilih ? roof.p2 : roof.p).split`@`[0]} Tidak Memilih Suit, Game Over!`, m)
 	    }
 	    delete this.suit[roof.id]
 	    return !0
@@ -881,21 +887,21 @@ click https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] 
 	    }
 	    let jwb = m.sender == roof.p
 	    let jwb2 = m.sender == roof.p2
-	    let g = /scissors/i
-	    let b = /rock/i
-	    let k = /paper/i
-	    let reg = /^(scissors|rock|paper)/i
+	    let g = /gunting/i
+	    let b = /batu/i
+	    let k = /kertas/i
+	    let reg = /^(gunting|batu|kertas)/i
 	    if (jwb && reg.test(m.text) && !roof.pilih && !m.isGroup) {
 	    roof.pilih = reg.exec(m.text.toLowerCase())[0]
 	    roof.text = m.text
-	    m.reply(`You have chosen ${m.text} ${!roof.pilih2 ? `\n\nWaiting for the opponent to choose` : ''}`)
-	    if (!roof.pilih2) XeonBotInc.sendText(roof.p2, '_The opponent has chosen_\nNow it is your turn', 0)
+	    m.reply(`Kamu telah memlilih ${m.text} ${!roof.pilih2 ? `\n\nWaiting for the opponent to choose` : ''}`)
+	    if (!roof.pilih2) XeonBotInc.sendText(roof.p2, '_Lawan telah memilih_\nSekarang giliranmu_', 0)
 	    }
 	    if (jwb2 && reg.test(m.text) && !roof.pilih2 && !m.isGroup) {
 	    roof.pilih2 = reg.exec(m.text.toLowerCase())[0]
 	    roof.text2 = m.text
-	    m.reply(`You have chosen ${m.text} ${!roof.pilih ? `\n\nWaiting for the opponent to choose` : ''}`)
-	    if (!roof.pilih) XeonBotInc.sendText(roof.p, '_The opponent has chosen_\nNow it is your turn', 0)
+	    m.reply(`Kamu telah memilih ${m.text} ${!roof.pilih ? `\n\nMenunggu lawan memilih` : ''}`)
+	    if (!roof.pilih) XeonBotInc.sendText(roof.p, '_Lawan telah memilih_\nSekarang giliranmu', 0)
 	    }
 	    let stage = roof.pilih
 	    let stage2 = roof.pilih2
@@ -910,8 +916,8 @@ click https://wa.me/${botNumber.split`@`[0]}`, m, { mentions: [roof.p, roof.p2] 
 	    else if (stage == stage2) tie = true
 	    XeonBotInc.sendText(roof.asal, `_*Suit Results*_${tie ? '\nSERIES' : ''}
 
-@${roof.p.split`@`[0]} (${roof.text}) ${tie ? '' : roof.p == win ? ` Win \n` : ` Lost \n`}
-@${roof.p2.split`@`[0]} (${roof.text2}) ${tie ? '' : roof.p2 == win ? ` Win \n` : ` Lost  \n`}
+@${roof.p.split`@`[0]} (${roof.text}) ${tie ? '' : roof.p == win ? ` Menang \n` : ` Kalah \n`}
+@${roof.p2.split`@`[0]} (${roof.text2}) ${tie ? '' : roof.p2 == win ? ` Menang \n` : ` Kalah \n`}
 `.trim(), m, { mentions: [roof.p, roof.p2] })
 	    delete this.suit[roof.id]
 	    }
@@ -964,10 +970,6 @@ let docs = pickRandom(documents)
 *Alasan:* ${text ? '' + text : '-'}
 `.trim()
                 m.reply(str)
-            }
-            break	
-            case 'assalamualaikum': case "Assalamualaikum": case 'asalamualaikum': case `Assalamu'alaikum`: case "assalamu'alaikum": {
-            m.reply('وَعَلَيْكُمْ السَّلاَمُ وَرَحْمَةُ اللهِ وَبَرَكَاتُهُ\n_wa\'alaikumussalam wr.wb._')
             }
             break
                 case 'ttc': case 'ttt': case 'tictactoe': {
@@ -1038,16 +1040,16 @@ Type *surrender* to surrender and admit defeat`
             let poin = 10
             let poin_lose = 10
             let timeout = 60000
-            if (Object.values(this.suit).find(roof => roof.id.startsWith('suit') && [roof.p, roof.p2].includes(m.sender))) m.reply(`Complete your previous game`)
-	    if (m.mentionedJid[0] === m.sender) return m.reply(`Can't play with myself !`)
-            if (!m.mentionedJid[0]) return m.reply(`_Who do you want to challenge?_\nTag the person..\n\nExample : ${prefix}suit @${owner[1]}`, m.chat, { mentions: [owner[1] + '@s.whatsapp.net'] })
-            if (Object.values(this.suit).find(roof => roof.id.startsWith('suit') && [roof.p, roof.p2].includes(m.mentionedJid[0]))) throw `The person you are challenging is playing suit with someone else :(`
+            if (Object.values(this.suit).find(roof => roof.id.startsWith('suit') && [roof.p, roof.p2].includes(m.sender))) m.reply(`Selesaikan game Anda sebelumnya`)
+	    if (m.mentionedJid[0] === m.sender) return m.reply(`Tidak bisa bermain dengan diri sendiri`)
+            if (!m.mentionedJid[0]) return m.reply(`Siapa yang ingin Anda tantang?_\n Tag orangnya..\n\nContoh : ${prefix}suit @${owner[1]}`, m.chat, { mentions: [owner[1] + '@s.whatsapp.net'] })
+            if (Object.values(this.suit).find(roof => roof.id.startsWith('suit') && [roof.p, roof.p2].includes(m.mentionedJid[0]))) throw `Orang yang Anda tantang sedang bermain dengan orang lain :(`
             let id = 'suit_' + new Date() * 1
             let caption = `_*SUIT PvP*_
 
-@${m.sender.split`@`[0]} *Challenged* @${m.mentionedJid[0].split`@`[0]} *to play suit*
+@${m.sender.split`@`[0]} *Menantang* @${m.mentionedJid[0].split`@`[0]} *untuk bermain suit*
 
-*Hi* @${m.mentionedJid[0].split`@`[0]} *Please type accept to accept or type reject to reject`
+*Hai* @${m.mentionedJid[0].split`@`[0]} *Silahkan ketik *terima* untuk menerima atau ketik reject untuk menolak*`
             this.suit[id] = {
             chat: await XeonBotInc.sendText(m.chat, caption, m, { mentions: parseMention(caption) }),
             id: id,
@@ -1062,7 +1064,7 @@ Type *surrender* to surrender and admit defeat`
             }
             break
             case 'wangy': {
-            if (!text) throw `Example wangy Fidel`
+            if (!text) throw `Example ${prefix}wangy Minaj`
             let awikwok = `${text} ${text} ${text} 🖤 🖤 🖤 WANGY WANGY WANGY WANGY HU HA HU HA HU HA, aaaah baunya rambut ${text} wangyy aku mau nyiumin aroma wangynya ${text} AAAAAAAAH ~ Rambutnya.... aaah rambutnya juga pengen aku elus-elus ~~ AAAAAH ${text} keluar pertama kali di anime juga manis 🖤 🖤 🖤 banget AAAAAAAAH ${text} AAAAA LUCCUUUUUUUUUUUUUUU............ ${text} AAAAAAAAAAAAAAAAAAAAGH 🖤 🖤 🖤apa ? ${text} itu gak nyata ? Cuma HALU katamu ? nggak, ngak ngak ngak ngak NGAAAAAAAAK GUA GAK PERCAYA ITU DIA NYATA NGAAAAAAAAAAAAAAAAAK PEDULI BANGSAAAAAT !! GUA GAK PEDULI SAMA KENYATAAN POKOKNYA GAK PEDULI. 🖤 🖤 🖤 ${text} gw ... ${text} di laptop ngeliatin gw, ${text} .. kamu percaya sama aku ? aaaaaaaaaaah syukur ${text} aku gak mau merelakan ${text} aaaaaah 🖤 🖤 🖤 YEAAAAAAAAAAAH GUA MASIH PUNYA ${text} SENDIRI PUN NGGAK SAMA AAAAAAAAAAAAAAH`
             m.reply(awikwok)
             }
@@ -1943,7 +1945,7 @@ ${themeemoji} Url : ${anulay.url}
 `.trim()
 let pl = await xeonplaymp3.mp3(anulay.url)
                 XeonBotInc.sendMessage(m.chat, { image: { url: anulay.thumbnail }, caption: caption }, { quoted: m })
-                XeonBotInc.sendMessage(m.chat, { audio: fs.readFileSync(pl.path), mimetype: 'audio/mp4' }, { quoted: m })
+               await XeonBotInc.sendMessage(m.chat, { audio: fs.readFileSync(pl.path), mimetype: 'audio/mp4' }, { quoted: m })
             }
             break
 case 'playmp3': //credit: Ray Senpai ❤️ https://github.com/EternityBots/Nezuko
